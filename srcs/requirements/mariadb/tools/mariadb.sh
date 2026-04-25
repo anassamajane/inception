@@ -7,12 +7,10 @@ mysqld_safe --user=mysql &
 if [ ! -d "/var/lib/mysql/mysql"]; then
 	echo "Initializing database..."
 
-# run SQL commands
-mysql -e "CREATE DATABASE mydb;"
-mysql -e "CREATE USER 'myuser'@'%' IDENTIFIED BY 'mypassword';"
-mysql -e "GRANT ALL PRIVILEGES ON mydb.* TO 'myuser'@'%';"
-mysql -e "FLUSH PRIVILEGES;"
-
+	mysql -e "CREATE DATABASE $MYSQL_DATABASE;"
+	mysql -e "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
+	mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';"
+	mysql -e "FLUSH PRIVILEGES;"
 fi
 
 # restart MariaDB
