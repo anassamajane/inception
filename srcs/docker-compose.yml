@@ -1,0 +1,16 @@
+
+  nginx:
+    image : /requirements/nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/html:/usr/share/nginx/html
+    netwrok:
+      - incetption
+
+
+network:
+inception
+
