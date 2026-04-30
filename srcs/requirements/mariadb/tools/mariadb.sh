@@ -3,8 +3,13 @@
 #start Mariadb in background
 mysqld_safe --user=mysql &
 
-# check if DB is already initialized
-if [ ! -d "/var/lib/mysql/mysql"]; then
+# Wait until ready
+until mysqladmin ping --silent; do
+    sleep 1
+done
+
+# check if database exists
+if ! mysql -e "USE $MYSQL_DATABASE;" 2>/dev/null; then
 	echo "Initializing database..."
 
 	mysql -e "CREATE DATABASE $MYSQL_DATABASE;"
