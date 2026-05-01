@@ -22,4 +22,4 @@ fi
 mysqladmin -u root shutdown
 
 # Start MariaDB
-exec mysqld --user=mysql
+exec mysqld --user=mysql --bind-address=0.0.0.0

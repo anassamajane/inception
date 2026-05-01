@@ -4,7 +4,8 @@ RUN apt-get update && apt-get install -y \
     php \
     php-fpm \
     php-mysql \
-    curl
+    curl \
+    mariadb-client
 
 # Download WordPress
 RUN curl -O https://wordpress.org/latest.tar.gz \
@@ -18,4 +19,7 @@ RUN chown -R www-data:www-data /var/www/html
 # Configure PHP-FPM to listen on port 9000
 RUN sed -i 's|listen = /run/php/php8.2-fpm.sock|listen = 9000|' /etc/php/8.2/fpm/pool.d/www.conf
 
-CMD ["php-fpm8.2", "-F"]
+COPY tools/wordpress.sh /wordpress.sh
+RUN chmod +x /wordpress.sh
+
+CMD ["/wordpress.sh"]
