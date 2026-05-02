@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-set -x
+#set -x
 
 echo "Waiting for MariaDB..."
 MAX_TRIES=30
