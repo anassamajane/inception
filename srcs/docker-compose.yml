@@ -17,9 +17,23 @@ services:
       - .env
     environment:
       - MYSQL_HOST=mariadb
+    volumes:
+      - wordpress_data:/var/www/html
     depends_on:
       - mariadb
     restart: always
 
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
+    restart: always
+
 volumes:
   mariadb_data:
+  wordpress_data:
