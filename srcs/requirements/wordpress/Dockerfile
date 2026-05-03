@@ -7,6 +7,11 @@ RUN apt-get update && apt-get install -y \
     curl \
     mariadb-client
 
+# Install WP-CLI
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x wp-cli.phar \
+    && mv wp-cli.phar /usr/local/bin/wp
+
 # Download WordPress
 RUN curl -O https://wordpress.org/latest.tar.gz \
     && tar -xvf latest.tar.gz \
