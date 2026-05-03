@@ -14,12 +14,14 @@ cd /var/www/html/wordpress
 
 # create config if not exists
 if [ ! -f wp-config.php ]; then
-    cp wp-config-sample.php wp-config.php
+	echo "Creating wp-config.php..."
 
-    sed -i "s/database_name_here/$MYSQL_DATABASE/" wp-config.php
-    sed -i "s/username_here/$MYSQL_USER/" wp-config.php
-    sed -i "s/password_here/$MYSQL_PASSWORD/" wp-config.php
-    sed -i "s/localhost/$MYSQL_HOST/" wp-config.php
+	wp config create \
+		--dbname="$MYSQL_DATABASE" \
+		--dbuser="$MYSQL_USER" \
+		--dbpass="$MYSQL_PASSWORD" \
+		--dbhost="$MYSQL_HOST" \
+		--allow-root
 fi
 
 # install wordpress if not installed
