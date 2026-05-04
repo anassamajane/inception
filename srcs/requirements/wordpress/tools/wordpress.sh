@@ -1,10 +1,14 @@
 #!/bin/bash
 
-set -e
-#set -x
+# set -e
+# set -x
 
 echo "Waiting for MariaDB..."
-until mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1;" "$MYSQL_DATABASE" 2>&1; do
+# until mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1;" "$MYSQL_DATABASE" 2>&1; do
+#     sleep 1
+# done
+
+until mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT VERSION();" > /dev/null; do
     sleep 1
 done
 
