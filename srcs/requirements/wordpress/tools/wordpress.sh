@@ -39,6 +39,16 @@ if ! wp core is-installed --allow-root;then
 		--allow-root
 fi
 
+# create second user if not exists
+if ! wp user get "$WP_USER" --allow-root > /dev/null 2>&1; then
+	echo "Ceating second user..."
+
+	wp user create "$WP_USER" "$WP_USER_EMAIL" \
+		--user_pass="$WP_USER_PASSWORD" \
+		--role=author \
+		--allow-root
+fi
+
 echo "Starting PHP-FPM..."
 
 exec php-fpm8.2 -F
