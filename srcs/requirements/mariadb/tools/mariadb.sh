@@ -1,9 +1,6 @@
 #!/bin/bash
 
-set -e
-set -x
-
-#start Mariadb in background
+# start Mariadb in background
 mysqld_safe --user=mysql &
 
 # Wait until ready

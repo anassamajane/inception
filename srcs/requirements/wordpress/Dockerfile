@@ -15,8 +15,8 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 # Download WordPress
 RUN curl -O https://wordpress.org/latest.tar.gz \
     && tar -xvf latest.tar.gz \
-    && mv wordpress /var/www/html \
-    && rm latest.tar.gz
+    && mv wordpress/* /var/www/html \
+    && rm -rf wordpress latest.tar.gz
 
 # Fix permissions
 RUN chown -R www-data:www-data /var/www/html
