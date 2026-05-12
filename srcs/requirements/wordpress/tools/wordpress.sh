@@ -34,11 +34,9 @@ fi
 
 # install redis plugin
 wp plugin install redis-cache --activate --allow-root
-
 # configure redis in wp-config.php
 wp config set WP_REDIS_HOST "redis" --allow-root
 wp config set WP_REDIS_PORT 6379 --raw --allow-root
-
 # enable cache
 wp redis enable --allow-root
 
