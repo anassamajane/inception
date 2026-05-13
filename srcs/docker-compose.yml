@@ -45,9 +45,30 @@ services:
       - inception
     restart: always
 
+  adminer:
+    build: ./requirements/bonus/adminer
+    container_name: adminer
+    networks:
+      - inception
+    restart: always
+
   static-site:
     build: ./requirements/bonus/static-site
     container_name: static-site
+    networks:
+      - inception
+    restart: always
+
+  ftp:
+    build: ./requirements/bonus/ftp
+    container_name: ftp
+    env_file:
+      - .env
+    ports:
+      - "21:21"
+      - "10000-10100:10000-10100"
+    volumes:
+      - wordpress_data:/home/${FTP_USER}/wordpress
     networks:
       - inception
     restart: always
