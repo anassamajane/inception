@@ -1,10 +1,247 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Anass Portfolio</title>
+    <meta charset="UTF-8">
+    <title>Anass Amajane - Resume</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            color: #e5e7eb;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 70%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #111111;
+            border: 1px solid #1e1e1e;
+            padding: 35px;
+            border-radius: 14px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #1e1e1e;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 auto 15px;
+            border: 3px solid #2a2a2a;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        header .title {
+            color: #a78bfa;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            color: #888;
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        section {
+            margin-bottom: 28px;
+        }
+
+        h2 {
+            color: #a78bfa;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #1e1e1e;
+        }
+
+        section p {
+            color: #9ca3af;
+            line-height: 1.75;
+            font-size: 0.95rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+        }
+
+        .skill-item {
+            background: #161616;
+            border: 1px solid #1e1e1e;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.875rem;
+            color: #d1d5db;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #7c3aed;
+            flex-shrink: 0;
+        }
+
+        .exp-item {
+            background: #161616;
+            border: 1px solid #1e1e1e;
+            border-left: 3px solid #7c3aed;
+            border-radius: 0 8px 8px 0;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #d1d5db;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exp-score {
+            background: #1e1e2e;
+            color: #a78bfa;
+            font-size: 0.78rem;
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid #2a2a3e;
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-item {
+            background: #161616;
+            border: 1px solid #1e1e1e;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-item span {
+            color: #a78bfa;
+            font-size: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #1a1a1a;
+            color: #444;
+            font-size: 0.8rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello from my static website!</h1>
-    <p>This is my Inception bonus static site.</p>
+<div class="container">
+
+    <header>
+        <div class="avatar">AM</div>
+        <h1>Anass Amajane</h1>
+        <p class="title">1337 Student — 42 Network</p>
+        <div class="badges">
+            <span class="badge">📍 Morocco</span>
+            <span class="badge">🎓 1337 Benguerir</span>
+            <span class="badge">💻 42 Network</span>
+        </div>
+    </header>
+
+    <section>
+        <h2>About Me</h2>
+        <p>
+            I am a software engineering student at 1337 School, part of the 42 Network.
+            I enjoy solving hard problems through hands-on projects — from building a shell
+            from scratch to writing a 3D raycasting engine. I work mainly in C and C++,
+            and I learn best by getting deep into how things actually work under the hood.
+        </p>
+    </section>
+
+    <section>
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-item"><div class="skill-dot"></div>C / C++</div>
+            <div class="skill-item"><div class="skill-dot"></div>OOP (CPP Modules)</div>
+            <div class="skill-item"><div class="skill-dot"></div>Unix / Linux</div>
+            <div class="skill-item"><div class="skill-dot"></div>Processes & Threads</div>
+            <div class="skill-item"><div class="skill-dot"></div>Bash Scripting</div>
+            <div class="skill-item"><div class="skill-dot"></div>Docker & Compose</div>
+            <div class="skill-item"><div class="skill-dot"></div>Networking / TCP-IP</div>
+            <div class="skill-item"><div class="skill-dot"></div>Git</div>
+            <div class="skill-item"><div class="skill-dot"></div>Algorithms & Data Structures</div>
+            <div class="skill-item"><div class="skill-dot"></div>Memory Management</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Projects</h2>
+        <div class="exp-item">✦ Minishell — POSIX shell with pipes, redirections & builtins</div>
+        <div class="exp-item">✦ cub3D — 3D raycasting game engine in C (like Wolfenstein)</div>
+        <div class="exp-item">✦ Inception — Multi-container Docker infra with nginx, WordPress, MariaDB</div>
+        <div class="exp-item">✦ Philosophers — Dining philosophers with threads & mutexes</div>
+        <div class="exp-item">✦ push_swap — Sorting algorithm with limited instruction set</div>
+        <div class="exp-item">✦ minitalk — Unix signal-based inter-process communication</div>
+        <div class="exp-item">✦ NetPractice — Networking & subnetting exercises</div>
+        <div class="exp-item">✦ Born2beroot — Linux server setup & system administration</div>
+    </section>
+
+    <section>
+        <h2>Contact</h2>
+        <div class="contact-grid">
+            <div class="contact-item"><span>📧</span> anass.amajane2001@gmail.com</div>
+            <div class="contact-item"><span>🐙</span> github.com/anassamajane</div>
+        </div>
+    </section>
+
+    <footer>
+        Hosted via Docker · Inception Bonus · 1337 School · 42 Network
+    </footer>
+
+</div>
 </body>
 </html>
