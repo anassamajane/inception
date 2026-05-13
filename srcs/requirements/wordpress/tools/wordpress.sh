@@ -22,7 +22,7 @@ if [ ! -f wp-config.php ]; then
 fi
 
 # install wordpress if not installed
-if ! wp core is-installed --allow-root;then
+if ! wp core is-installed --allow-root; then
 	wp core install \
 		--url="$WP_URL" \
 		--title="$WP_TITLE" \
@@ -32,13 +32,14 @@ if ! wp core is-installed --allow-root;then
 		--allow-root
 fi
 
-# install redis plugin
-wp plugin install redis-cache --activate --allow-root
-# configure redis in wp-config.php
-wp config set WP_REDIS_HOST "redis" --allow-root
-wp config set WP_REDIS_PORT 6379 --raw --allow-root
-# enable cache
-wp redis enable --allow-root
+# Install and configure Redis cache plugin
+if ! wp plugin is-installed redis-cache --allow-root; then
+    echo "Installing Redis cache plugin..."
+    wp plugin install redis-cache --activate --allow-root
+    wp config set WP_REDIS_HOST "redis" --allow-root
+    wp config set WP_REDIS_PORT 6379 --raw --allow-root
+    wp redis enable --allow-root
+fi
 
 # create second user if not exists
 if ! wp user get "$WP_USER" --allow-root > /dev/null 2>&1; then
