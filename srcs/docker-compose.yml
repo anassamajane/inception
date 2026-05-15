@@ -1,6 +1,8 @@
 services:
+
   mariadb:
     build: ./requirements/mariadb
+    image: mariadb
     container_name: mariadb
     env_file:
       - .env
@@ -12,6 +14,7 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
+    image: wordpress
     container_name: wordpress
     env_file:
       - .env
@@ -21,12 +24,14 @@ services:
       - wordpress_data:/var/www/html
     depends_on:
       - mariadb
+      - redis ####
     networks:
       - inception
     restart: always
 
   nginx:
     build: ./requirements/nginx
+    image: nginx
     container_name: nginx
     ports:
       - "443:443"
@@ -40,6 +45,7 @@ services:
 
   redis:
     build: ./requirements/bonus/redis
+    image: redis
     container_name: redis
     networks:
       - inception
@@ -47,6 +53,7 @@ services:
 
   adminer:
     build: ./requirements/bonus/adminer
+    image: adminer
     container_name: adminer
     networks:
       - inception
@@ -54,6 +61,7 @@ services:
 
   static-site:
     build: ./requirements/bonus/static-site
+    image: static-site
     container_name: static-site
     networks:
       - inception
@@ -61,6 +69,7 @@ services:
 
   ftp:
     build: ./requirements/bonus/ftp
+    image: ftp
     container_name: ftp
     env_file:
       - .env
@@ -69,6 +78,16 @@ services:
       - "10000-10100:10000-10100"
     volumes:
       - wordpress_data:/home/${FTP_USER}/wordpress
+    networks:
+      - inception
+    restart: always
+
+  portainer:
+    build: ./requirements/bonus/portainer
+    image: portainer
+    container_name: portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - inception
     restart: always
