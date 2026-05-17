@@ -1,82 +1,90 @@
-# Inception
+*This project has been created as part of the 42 curriculum by anaamaja.*
 
-*This project has been created as part of the 42 curriculum by anaamaja*
+# Inception
 
 ## Description
 
-This project involves setting up a small infrastructure composed of different services using Docker Compose. The goal is to create a fully functional web application stack with WordPress as the CMS, MariaDB as the database, and NGINX as the web server with SSL/TLS encryption.
+This repository contains the Inception project stack implemented using Docker and Docker Compose. The goal is to deploy a small web application ecosystem that includes a WordPress site, MariaDB database, Nginx web server, Redis cache, Adminer administration tool, Portainer management UI, an FTP service, and a static bonus site.
+
+The project demonstrates Docker-based service orchestration, container networking, data persistence, and automated service startup. It packages multiple containers and shared volumes under a single `srcs/docker-compose.yml` stack and uses a `Makefile` to simplify build and deploy operations.
 
 ## Instructions
 
-### Prerequisites
-- Docker and Docker Compose installed
-- Linux/Unix environment
-- Domain name configured (anaamaja.42.fr pointing to localhost)
+1. Place this repository root in a Linux environment with Docker and Docker Compose installed.
+2. Create a `srcs/.env` file with the required service environment variables. Example variables include:
+   - `MYSQL_ROOT_PASSWORD`
+   - `MYSQL_DATABASE`
+   - `MYSQL_USER`
+   - `MYSQL_PASSWORD`
+   - `WP_URL`
+   - `WP_TITLE`
+   - `WP_ADMIN_USER`
+   - `WP_ADMIN_PASSWORD`
+   - `WP_ADMIN_EMAIL`
+   - `WP_USER`
+   - `WP_USER_EMAIL`
+   - `WP_USER_PASSWORD`
+   - `FTP_USER`
+   - `FTP_PASSWORD`
+3. Run `make all` from the repository root to create the local data directories, build all images, and launch the stack.
+4. Use `make up` to start containers without rebuilding.
+5. Use `make down` to stop the stack.
+6. Use `make clean` to stop the stack and remove containers, networks, Docker volumes, and bind-mounted local data.
+7. Use `make ps` to inspect running containers and `make logs` to follow service logs.
 
-### Installation and Execution
-1. Clone the repository
-2. Navigate to the inception directory
-3. Run `make` to set up and start all services
-4. Access the application at https://anaamaja.42.fr
+## Services Included
 
-### Build Commands
-- `make all`: 
-- `make up`: 
-- `make down`: 
-- `make clean`: 
-- `make fclean`: 
-
-## Resources
-
-### Classic References
-- [Docker Documentation](https://docs.docker.com/)
-- [Docker Compose Documentation](https://docs.docker.com/compose/)
-- [WordPress Developer Resources](https://developer.wordpress.org/)
-- [NGINX Documentation](https://nginx.org/en/docs/)
-- [MariaDB Documentation](https://mariadb.com/kb/en/documentation/)
-
-### AI Usage
-AI was used to assist with:
-- Docker configuration optimization and best practices
-- Script debugging and error resolution
-- Documentation structure and content generation
-- Code review and improvement suggestions
+- `mariadb`: MariaDB database service.
+- `wordpress`: WordPress PHP/FPM application.
+- `nginx`: Nginx reverse proxy and SSL entrypoint.
+- `redis`: Redis cache service for WordPress.
+- `adminer`: Database administration tool.
+- `static-site`: A simple static bonus website.
+- `ftp`: FTP server for file transfer.
+- `portainer`: Docker management UI.
 
 ## Project Description
 
-This project uses Docker to build and run each service inside its own container. The source files are organized under `srcs/`, with one Dockerfile per service and a single `docker-compose.yml` file to orchestrate the stack.
+This Inception project uses Docker to isolate services and control dependencies while enabling repeatable deployment. Each service is built from a Dockerfile in `srcs/requirements/`, and `srcs/docker-compose.yml` defines service relationships, shared volumes, and the project network.
 
-### Docker Usage and Project Sources
+The stack is designed around a single Docker network named `inception`, allowing containers to communicate by service name. Persisted data is stored on local Docker volumes bound to directories under `/home/anaamaja/data`, which keeps WordPress and MariaDB data safe across container restarts.
 
-The stack uses Docker Compose to create an isolated network for all services. The main source files are:
+## Docker Design Choices
 
-- `srcs/docker-compose.yml` — defines services, networks, and volumes
-- `srcs/.env` — stores runtime configuration and credentials
-- `srcs/requirements/nginx/` — NGINX Dockerfile and SSL configuration
-- `srcs/requirements/wordpress/` — WordPress container with PHP-FPM and setup script
-- `srcs/requirements/mariadb/` — MariaDB container and initialization script
-- `srcs/requirements/bonus/` — additional services like Redis, Adminer, FTP, static website, and portainer
+### Virtual Machines vs Docker
 
-### Main Design Choices
+- Docker is used because it is lighter, faster to start, and easier to manage for this multi-service web stack. Containers share the host kernel and require fewer resources than full virtual machines.
+- Virtual Machines provide stronger isolation and can run different kernels, but they are heavier and slower to provision. For this project, Docker is the better choice for development and deployment of the stack.
 
-- **Microservices Architecture**: Each service is isolated in its own container for better maintainability and separation of concerns.
-- **Reverse Proxy**: NGINX handles HTTPS termination and routes requests to WordPress, Adminer, and the static website.
-- **Data Persistence**: WordPress and MariaDB data are stored on host-bound directories so data remains after container restarts.
+### Secrets vs Environment Variables
 
-### Comparisons
+- Environment variables are used for configuration values such as database credentials and WordPress settings. This is convenient for Docker Compose and build-time container setup.
+- Secrets are preferable for production-grade deployments because they reduce exposure of sensitive values and can be managed securely by orchestration platforms. This repository avoids storing real secrets and expects the user to define non-sensitive values in `srcs/.env`.
 
-#### Virtual Machines vs Docker
-- **Virtual Machines**: Run full guest OS instances, use more resources, and take longer to start.
-- **Docker**: Runs lightweight containers sharing the host kernel, with faster startup and lower overhead.
+### Docker Network vs Host Network
 
-#### Secrets vs Environment Variables
-- **Secrets**: More secure for sensitive information, usually hidden and managed separately from service configuration.
-- **Environment Variables**: Easier for development and configuration, but less secure because they are visible in container metadata and `.env` files.
+- The `inception` user-defined bridge network is used so containers can resolve each other by service name and remain isolated from other host services.
+- Host network mode would expose container ports directly on the host network stack and can be less secure. For this stack, Docker networking provides safer service separation and easier container-to-container communication.
 
-#### Docker Network vs Host Network
-- **Docker Network**: Provides isolated networking and service discovery by container name, which is safer and more flexible.
-- **Host Network**: Uses the host network stack directly, which can improve performance but reduces isolation and increases port conflict risk.
+### Docker Volumes vs Bind Mounts
 
-#### Docker Volumes vs Bind Mounts
-- **Docker Volumes**: Managed by Docker, good for persistent storage and portability across hosts.
-- **Bind Mounts**: Directly map host filesystem paths into containers, useful for development and direct file access, but less portable.
+- Docker volumes are used with bind mount driver options to persist database and WordPress files on the host filesystem. This keeps application data outside the container lifecycle.
+- Bind mounts expose specific host directories directly into containers, which can simplify development but may be less portable. The current setup uses bind-backed Docker volumes to combine persistence with easier control over storage location.
+
+## Resources
+
+- Docker documentation: https://docs.docker.com
+- Docker Compose documentation: https://docs.docker.com/compose/
+- WordPress documentation: https://developer.wordpress.org/
+- MariaDB documentation: https://mariadb.com/kb/en/
+- Nginx documentation: https://nginx.org/en/docs/
+- Adminer: https://www.adminer.org/
+
+### AI Usage
+
+AI was used to assist with:
+
+- Docker configuration optimization and best practices
+- Debugging and resolving shell script and container startup issues
+- Structuring documentation for clarity and subject compliance
+- Reviewing Docker Compose and service configuration details
