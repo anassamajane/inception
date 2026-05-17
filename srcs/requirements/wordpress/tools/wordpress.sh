@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Waiting for MariaDB..."
-until mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT VERSION();" > /dev/null; do
+until mysql -h mariadb -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT VERSION();" > /dev/null; do
     sleep 1
 done
 
@@ -17,7 +17,7 @@ if [ ! -f wp-config.php ]; then
 		--dbname="$MYSQL_DATABASE" \
 		--dbuser="$MYSQL_USER" \
 		--dbpass="$MYSQL_PASSWORD" \
-		--dbhost="$MYSQL_HOST" \
+		--dbhost=mariadb:3306 \
 		--allow-root
 fi
 

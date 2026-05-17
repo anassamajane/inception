@@ -12,6 +12,6 @@ RUN openssl req -x509 -nodes -days 365 \
 	-subj "/C=MA/ST=Marrakesh-Safi/L=Benguerir/O=42/OU=1337/CN=anaamaja.42.fr"
 
 # copy config
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]

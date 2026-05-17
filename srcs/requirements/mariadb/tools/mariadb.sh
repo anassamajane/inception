@@ -20,7 +20,7 @@ FLUSH PRIVILEGES;
 EOF
 fi
 
-# restart MariaDB
+# shutdown MariaDB
 mysqladmin -u root -p"$MYSQL_ROOT_PASSWORD" shutdown
 
 # Start MariaDB

@@ -18,13 +18,10 @@ services:
     container_name: wordpress
     env_file:
       - .env
-    environment:
-      - MYSQL_HOST=mariadb
     volumes:
       - wordpress_data:/var/www/html
     depends_on:
       - mariadb
-      - redis ####
     networks:
       - inception
     restart: always
@@ -108,5 +105,4 @@ volumes:
 
 networks:
   inception:
-    driver: bridge
     name: inception
