@@ -17,7 +17,7 @@ down:
 
 clean:
 	@$(COMPOSE) down -v
-	@rm -rf $(DATA_PATH)
+	@sudo rm -rf $(DATA_PATH)
 
 fclean: clean
 	@docker system prune -af
